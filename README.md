@@ -1,7 +1,3 @@
-
----
-
-````markdown
 # Evil Twin Wi-Fi Attack (Educational Simulation)
 
 This project demonstrates how an **Evil Twin Wi-Fi attack** works by simulating a fake Access Point with a captive portal.  
@@ -30,8 +26,6 @@ Make sure the following requirements are met:
    Check if your adapter supports AP mode:  
    ```bash
    iw list | grep -A 10 "Supported interface modes"
-````
-
 Look for `AP` in the list.
 
 3. **Active Internet connection** on another interface
@@ -66,7 +60,7 @@ Look for `AP` in the list.
 Clone the repository and set permissions:
 
 ```bash
-git clone https://github.com/yourname/evil-twin-wifi.git
+git clone https://github.com/giri068/evil-twin-wifi.git
 cd evil-twin-wifi
 chmod +x setup.sh start.sh stop.sh monitor.sh
 sudo ./setup.sh
@@ -124,3 +118,4 @@ This will look perfectly aligned in GitHub with proper sections, code blocks, an
 
 Do you also want me to add a **“Troubleshooting”** section (for errors like `dnsmasq: failed to bind` or `hostapd: nl80211 not found`) so that beginners can solve issues quickly?
 ```
+
