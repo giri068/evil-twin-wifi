@@ -25,11 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = trim($_POST['password'] ?? '');
     $client_ip = $_SERVER['REMOTE_ADDR'];
 
-    // Block empty login
     if ($user === '' || $pass === '') {
-        $error = "Username and password cannot be empty!";
+        $error = "Invalid username or password!";
     } else {
-        // Get MAC from ARP
+        // Get MAC from ARP (optional)
         $arp = shell_exec("arp -n $client_ip | awk 'NR==2 {print \$3}'");
         $client_mac = trim($arp);
 
@@ -40,17 +39,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($row) {
             // User exists → check password
-            if ($row['password'] === $pass) {
-                // Correct → login
-            } else {
+            if ($row['password'] !== $pass) {
                 $error = "Invalid username or password!";
             }
         } else {
-            // Do not auto-create accounts unless you want registration
-            $error = "User does not exist!";
+            // User does not exist → create account
+            $stmt = $db->prepare("INSERT INTO users (username, password) VALUES (:u, :p)");
+            $stmt->bindValue(':u', $user, SQLITE3_TEXT);
+            $stmt->bindValue(':p', $pass, SQLITE3_TEXT); // plaintext for now
+            $stmt->execute();
         }
 
-        // If login successful
+        // If no error, login and allow internet
         if (!isset($error)) {
             $_SESSION['user'] = $user;
 
@@ -70,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindValue(':exp', $expiry, SQLITE3_INTEGER);
             $stmt->execute();
 
-            // Whitelist client in iptables
-            shell_exec("sudo iptables -t nat -I PREROUTING -s $client_ip -j RETURN");
+            // Optional: whitelist in iptables (comment out if testing locally)
+            // shell_exec("sudo iptables -t nat -I PREROUTING -s $client_ip -j RETURN");
 
             header("Location: success.php");
             exit();
@@ -184,4 +184,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
   </div>
 </body>
+
 </html>
