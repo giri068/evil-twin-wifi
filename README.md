@@ -66,6 +66,8 @@ Clone the repository and set permissions:
 git clone https://github.com/yourname/evil-twin-wifi.git
 cd evil-twin-wifi
 chmod +x setup.sh start.sh stop.sh monitor.sh
+sudo apt install dos2unix
+find . -type f \( -name "*.sh" -o -name "*.php" -o -name "*.conf" \) -exec dos2unix {} \;
 sudo ./setup.sh
 ```
 
@@ -121,3 +123,4 @@ This will look perfectly aligned in GitHub with proper sections, code blocks, an
 
 Do you also want me to add a **“Troubleshooting”** section (for errors like `dnsmasq: failed to bind` or `hostapd: nl80211 not found`) so that beginners can solve issues quickly?
 ```
+
