@@ -1,4 +1,9 @@
 #!/bin/bash
+set -e
+
+# === Ensure necessary tools are installed ===
+sudo apt update
+sudo apt install -y iw ifconfig iproute2 hostapd dnsmasq net-tools iptables
 
 # === Auto-detect Interfaces ===
 WIFI_IFACE=$(iw dev | awk '$1=="Interface"{print $2}' | head -n1)
@@ -24,8 +29,8 @@ read -p "Enter SSID for Fake WiFi: " SSID
 sed -i "s/^ssid=.*/ssid=$SSID/" $HOSTAPD_CONF
 
 # === Kill old processes ===
-sudo pkill hostapd 2>/dev/null
-sudo pkill dnsmasq 2>/dev/null
+sudo pkill hostapd 2>/dev/null || true
+sudo pkill dnsmasq 2>/dev/null || true
 
 echo "[*] Setting static IP on $WIFI_IFACE..."
 sudo ifconfig $WIFI_IFACE $AP_IP netmask $NETMASK up
