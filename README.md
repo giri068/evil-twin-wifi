@@ -1,97 +1,126 @@
-Evil Twin Wi-Fi Attack (Educational Simulation)
 
-This project demonstrates how an Evil Twin Wi-Fi attack works by simulating a fake Access Point with a captive portal.
-⚠️ Educational purposes only – do not use against networks you don’t own or have permission to test.
+---
 
-Features
+````markdown
+# Evil Twin Wi-Fi Attack (Educational Simulation)
 
-Fake Wi-Fi Access Point with custom SSID
+This project demonstrates how an **Evil Twin Wi-Fi attack** works by simulating a fake Access Point with a captive portal.  
 
-Captive portal login page (mobile + desktop friendly)
+⚠️ For **educational purposes only** – do not use against networks you don’t own or have permission to test.
 
-Credentials stored in local SQLite database
+---
 
-Session tracking (IP, MAC, login time, active status)
+## Features
+- Fake Wi-Fi Access Point with custom SSID  
+- Captive portal login page (mobile + desktop friendly)  
+- Credentials stored in local SQLite database  
+- Session tracking (IP, MAC, login time, active status)  
+- Monitoring script to view connected users in real time  
+- Start/Stop scripts for easy management  
 
-Monitoring script to view connected users in real time
+---
 
-Start/Stop scripts for easy management
+## Before You Begin
+Make sure the following requirements are met:
 
-Before You Begin ✅
+1. **Linux system**  
+   Tested on Ubuntu 22.04/20.04. Debian-based systems should also work.  
 
-Make sure the following are ready before running the project:
+2. **USB Wi-Fi adapter with AP mode support**  
+   Check if your adapter supports AP mode:  
+   ```bash
+   iw list | grep -A 10 "Supported interface modes"
+````
 
-Linux system (tested on Ubuntu 22.04/20.04, Debian-based distros should also work).
+Look for `AP` in the list.
 
-USB Wi-Fi adapter that supports Access Point (AP) mode and packet injection.
+3. **Active Internet connection** on another interface
 
-You can check if your adapter supports AP mode:
+   * Example:
 
-iw list | grep -A 10 "Supported interface modes"
+     * `eth0` → Internet interface (wired)
+     * `wlan0` → Wireless adapter for fake AP
+   * If your interface names differ (e.g., `wlp3s0`, `ens33`), update them in `start.sh`.
 
+4. **Root privileges**
+   All scripts require `sudo`.
 
-Look for AP in the list.
+5. **Dependencies**: Apache, PHP, SQLite3, hostapd, dnsmasq
+   Install automatically using:
 
-Active Internet connection on your host machine (usually via Ethernet).
+   ```bash
+   sudo ./setup.sh
+   ```
 
-Example:
+6. **Disable NetworkManager for the Wi-Fi adapter**
+   Prevents conflicts with hostapd:
 
-eth0 → Internet interface (wired).
+   ```bash
+   nmcli dev set wlan0 managed no
+   ```
 
-wlan0 → Wireless adapter used for fake AP.
+---
 
-If your interface names differ (like wlp3s0 or ens33), update them in start.sh.
+## Setup
 
-Root privileges are required (use sudo when running scripts).
+Clone the repository and set permissions:
 
-Apache, PHP, SQLite3, hostapd, dnsmasq must be installed.
-
-Setup script will install automatically:
-
-sudo ./setup.sh
-
-
-Make sure NetworkManager is not controlling your Wi-Fi adapter (otherwise hostapd fails).
-Disable it for the adapter:
-
-nmcli dev set wlan0 managed no
-
-Setup
-
-Clone the repo and set up dependencies:
-
-git clone https://github.com/giri068/evil-twin-wifi.git
+```bash
+git clone https://github.com/yourname/evil-twin-wifi.git
 cd evil-twin-wifi
 chmod +x setup.sh start.sh stop.sh monitor.sh
 sudo ./setup.sh
+```
 
-Usage
+---
 
-Start the fake AP and captive portal:
+## Usage
 
+Start fake AP and captive portal:
+
+```bash
 sudo ./start.sh
+```
 
+Stop and restore:
 
-Stop everything and restore:
-
+```bash
 sudo ./stop.sh
+```
 
+Monitor connected users:
 
-Monitor connected users in real-time:
-
+```bash
 sudo ./monitor.sh
+```
 
-Project Structure
+---
+
+## Project Structure
+
+```
 wifi-evil-twin/
 │── start.sh         # Start AP + captive portal
-│── stop.sh          # Stop services + clean up
+│── stop.sh          # Stop services + cleanup
 │── monitor.sh       # View active sessions
 │── setup.sh         # Install dependencies + configure Apache/DB
 │── dnsmasq.conf     # DHCP/DNS config
 │── hostapd.conf     # AP config (SSID injected at runtime)
 │── portals/         # Captive portal (login.php, success.php, logout.php, assets)
+```
 
-Disclaimer
+---
 
-This repository is for educational and research purposes only.
-The author is not responsible for any misuse. Use only in controlled lab environments.
+## Disclaimer
+
+This repository is for **educational and research purposes only**.
+The author is not responsible for misuse. Use only in controlled lab environments.
+
+```
+
+---
+
+This will look perfectly aligned in GitHub with proper sections, code blocks, and lists.  
+
+Do you also want me to add a **“Troubleshooting”** section (for errors like `dnsmasq: failed to bind` or `hostapd: nl80211 not found`) so that beginners can solve issues quickly?
+```
