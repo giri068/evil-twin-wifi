@@ -10,7 +10,7 @@ $db->exec("UPDATE sessions SET active=0 WHERE ip='$client_ip'");
 shell_exec("sudo iptables -t nat -D PREROUTING -s $client_ip -j RETURN");
 
 session_destroy();
-header("Location: logout.html");
+header("Location: login.php");
 exit();
 ?>
 
@@ -41,3 +41,4 @@ exit();
     <h3>You have successfully logged out</h3>
 </body>
 </html>
+
