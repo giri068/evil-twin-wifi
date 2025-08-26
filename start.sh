@@ -29,7 +29,13 @@ else
 fi
 
 # Update hostapd.conf dynamically
+# sed -i "s/^ssid=.*/ssid=$FAKE_SSID/" hostapd.conf
+# Update hostapd.conf dynamically
 sed -i "s/^ssid=.*/ssid=$FAKE_SSID/" hostapd.conf
+sed -i "s/^interface=.*/interface=$WIFI_IFACE/" hostapd.conf
+
+# Update dnsmasq.conf dynamically
+sed -i "s/^interface=.*/interface=$WIFI_IFACE/" dnsmasq.conf
 
 # Save config for stop.sh
 echo "WIFI_IFACE=$WIFI_IFACE" > .evil_twin.conf
@@ -72,3 +78,4 @@ echo "   🔹 Fake SSID     : $FAKE_SSID"
 echo "   🔹 WiFi iface    : $WIFI_IFACE"
 echo "   🔹 Internet iface: $INTERNET_IFACE"
 echo "   🔹 Portal IP     : 192.168.50.1"
+
