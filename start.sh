@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-# === Ensure necessary tools are installed ===
-sudo apt update
-sudo apt install -y iw ifconfig iproute2 hostapd dnsmasq net-tools iptables
 
 # === Auto-detect Interfaces ===
 WIFI_IFACE=$(iw dev | awk '$1=="Interface"{print $2}' | head -n1)
@@ -66,3 +63,4 @@ echo "   🔹 SSID        : $SSID"
 echo "   🔹 WiFi iface  : $WIFI_IFACE"
 echo "   🔹 Internet IF : $INTERNET_IFACE"
 echo "   🔹 Portal IP   : $AP_IP"
+
