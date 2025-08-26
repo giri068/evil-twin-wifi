@@ -23,11 +23,15 @@ sudo ifconfig $WIFI_IFACE down
 sleep 2
 sudo ifconfig $WIFI_IFACE up
 
-# Restore original SSID
+# Restore original SSID and interface placeholders
 if [ ! -z "$ORIG_SSID" ]; then
     sed -i "s/^ssid=.*/ssid=$ORIG_SSID/" hostapd.conf
     echo "[*] Restored original SSID: $ORIG_SSID"
 fi
+
+sed -i "s/^interface=.*/interface=__WIFI_IFACE__/" hostapd.conf
+sed -i "s/^interface=.*/interface=__WIFI_IFACE__/" dnsmasq.conf
+echo "[*] Restored interface placeholders in hostapd.conf and dnsmasq.conf"
 
 # Remove config file for fresh next attack
 rm -f "$CONFIG_FILE"
