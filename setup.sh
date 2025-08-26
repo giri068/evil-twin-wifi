@@ -33,6 +33,7 @@ sudo bash -c "cat > $PORTAL_CONF" <<EOF
         AllowOverride All
         Require all granted
         DirectoryIndex login.php
+        FallbackResource /login.php
     </Directory>
 
     # Protect DB file
@@ -62,4 +63,5 @@ echo "   🔹 Portal folder: /var/www/portal"
 echo "   🔹 Secure DB: /var/www/secure/portal.db"
 echo "   🔹 Apache site enabled: portal.conf"
 echo "[*] Captive Portal is Actively running"
+
 
