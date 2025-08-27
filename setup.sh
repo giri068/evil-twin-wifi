@@ -46,12 +46,12 @@ sudo bash -c "cat > $PORTAL_CONF" <<EOF
 </VirtualHost>
 EOF
 
-# List all enabled sites
-ls /etc/apache2/sites-enabled/
 
-# Disable all
-sudo a2dissite '*' || true
+echo "[*] Enabling Apache modules..."
+sudo a2enmod rewrite
+sudo a2enmod php8.3
 
+sudo a2dissite 000-default.conf
 sudo a2ensite portal.conf
 sudo systemctl reload apache2
 
@@ -66,6 +66,7 @@ echo "   🔹 Portal folder: /var/www/portal"
 echo "   🔹 Secure DB: /var/www/secure/portal.db"
 echo "   🔹 Apache site enabled: portal.conf"
 echo "[*] Captive Portal is Actively running"
+
 
 
 
