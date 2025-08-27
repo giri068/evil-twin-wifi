@@ -4,9 +4,6 @@ set -e
 echo "[*] Installing dependencies..."
 sudo apt update
 
-sudo apt install dos2unix
-find . -type f \( -name "*.sh" -o -name "*.php" -o -name "*.conf" \) -exec dos2unix {} \;
-
 sudo apt install -y apache2 php libapache2-mod-php sqlite3 php-sqlite3 php-mysqli dnsmasq hostapd net-tools 
 
 
@@ -69,6 +66,7 @@ echo "   🔹 Portal folder: /var/www/portal"
 echo "   🔹 Secure DB: /var/www/secure/portal.db"
 echo "   🔹 Apache site enabled: portal.conf"
 echo "[*] Captive Portal is Actively running"
+
 
 
 
