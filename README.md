@@ -63,7 +63,7 @@ Look for `AP` in the list.
 Clone the repository and set permissions:
 
 ```bash
-git clone https://github.com/yourname/evil-twin-wifi.git
+git clone https://github.com/giri068/evil-twin-wifi.git
 cd evil-twin-wifi
 chmod +x setup.sh start.sh stop.sh monitor.sh
 sudo apt install dos2unix
@@ -123,4 +123,5 @@ This will look perfectly aligned in GitHub with proper sections, code blocks, an
 
 Do you also want me to add a **“Troubleshooting”** section (for errors like `dnsmasq: failed to bind` or `hostapd: nl80211 not found`) so that beginners can solve issues quickly?
 ```
+
 
